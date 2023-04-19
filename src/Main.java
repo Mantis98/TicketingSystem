@@ -1,7 +1,7 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Main {
+public class Main extends Ticket{
     public static void main(String[] args) {
         Scanner choice = new Scanner(System.in);
         Ticket t = new Ticket();
@@ -18,7 +18,7 @@ public class Main {
                         t.buyTicket();
                         break;
                     case 3:
-                        t.purchasedTickets();
+                        t.showPurchasedTickets();
                         break;
                     case 4:
                         System.out.println("See you next time.");
@@ -35,6 +35,7 @@ public class Main {
 
 
     }
+
 
 }
 

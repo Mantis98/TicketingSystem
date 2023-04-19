@@ -1,20 +1,25 @@
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
 public class Ticket {
-    HashMap<String, Integer> city = new HashMap<>();
     Scanner scanner = new Scanner(System.in);
-    ArrayList<String> purchasedTickets = new ArrayList<>();
+    HashMap<String, Integer> purchasedTickets = new HashMap<>();
+    HashMap<String, Integer> cities = new HashMap<>();
     double price;
     int quantity;
 
-    public Ticket() {
-        city.put("Lodz", 12);
-        city.put("Warsaw", 20);
-        city.put("Gdansk", 15);
-        city.put("Cracow", 30);
 
+    public Ticket() {
+
+        final Cities lodz = Cities.LODZ;
+        final Cities warsaw = Cities.WARSAW;
+        final Cities cracow = Cities.CRACOW;
+        final Cities gdansk = Cities.GDANSK;
+
+        cities.put(lodz.name(), 12);
+        cities.put(warsaw.name(), 20);
+        cities.put(gdansk.name(), 15);
+        cities.put(cracow.name(), 30);
 
     }
 
@@ -30,36 +35,56 @@ public class Ticket {
     }
 
     public void displayCities() {
-        for (String i : city.keySet()) {
+        for (String i : cities.keySet()) {
             System.out.print(i + ",\t");
-            System.out.println("price: " + city.get(i) + " PLN.");
+            System.out.println("price: " + cities.get(i) + " PLN.");
         }
     }
 
     public void buyTicket() {
         System.out.println("Where do you want to go?");
         String s = scanner.next();
-        for (String i : city.keySet()) {
-            if (s.equals(i)) {
+        for (String i : cities.keySet()) {
+            if (s.equals(i.toLowerCase())) {
                 howMany();
-                purchasedTickets.add(i);
-                price = price + city.get(i) * quantity;
-                System.out.println("Ticket purchased.");
+                purchasedTickets.put(i, quantity);
+                price = price + cities.get(i) * quantity;
             }
+            quantity = 0;
         }
 
     }
 
-    public void purchasedTickets() {
-        System.out.println(purchasedTickets + " x " + quantity);
-        System.out.println("Price of your tickets: " + price + " PLN.");
+
+    public void showPurchasedTickets() {
+        if (price > 0) {
+            for (String j : purchasedTickets.keySet()) {
+                System.out.println(j + " quantity: " + purchasedTickets.get(j));
+            }
+            System.out.println("Price of your tickets: " + price + " PLN.");
+        } else
+            System.out.println("Your order is empty.");
     }
+
 
     public void howMany() {
         System.out.println("How many tickets you want to buy?");
         int q = scanner.nextInt();
-        quantity = quantity + q;
+        if (q != 0) {
+            quantity = quantity + q;
+            System.out.println("Ticket purchased.");
+        } else
+            System.out.println("You have to choose quantity.");
 
+    }
+
+    public void discount() {
+        System.out.println("Do you have discount? Y/N");
+        String dis = scanner.next();
+        if (dis.equals("Y")) {
+            System.out.println("discount");
+        } else
+            System.out.println("no discount");
     }
 
 }
