@@ -1,4 +1,4 @@
-public enum Cities {
+enum Cities {
     LODZ,
     WARSAW,
     CRACOW,

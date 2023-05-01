@@ -9,7 +9,7 @@ public class Ticket {
     int quantity;
 
 
-    public Ticket() {
+    Ticket() {
 
         final Cities lodz = Cities.LODZ;
         final Cities warsaw = Cities.WARSAW;
@@ -23,7 +23,7 @@ public class Ticket {
 
     }
 
-    public void menu() {
+    void menu() {
         System.out.println("**************************");
         System.out.println("**   Ticketing system   **");
         System.out.println("**************************");
@@ -44,11 +44,17 @@ public class Ticket {
     public void buyTicket() {
         System.out.println("Where do you want to go?");
         String s = scanner.next();
+        boolean d = discount();
         for (String i : cities.keySet()) {
             if (s.equals(i.toLowerCase())) {
                 howMany();
-                purchasedTickets.put(i, quantity);
-                price = price + cities.get(i) * quantity;
+                if (!d) {
+                    purchasedTickets.put(i, quantity);
+                    price = price + cities.get(i) * quantity;
+                } else if (d) {
+                    purchasedTickets.put(i, quantity);
+                    price = (price + cities.get(i) * quantity) * 0.8;
+                }
             }
             quantity = 0;
         }
@@ -67,7 +73,7 @@ public class Ticket {
     }
 
 
-    public void howMany() {
+    private void howMany() {
         System.out.println("How many tickets you want to buy?");
         int q = scanner.nextInt();
         if (q != 0) {
@@ -78,13 +84,13 @@ public class Ticket {
 
     }
 
-    public void discount() {
-        System.out.println("Do you have discount? Y/N");
+    private boolean discount() {
+        System.out.println("Do you have discount? y/n?");
         String dis = scanner.next();
-        if (dis.equals("Y")) {
-            System.out.println("discount");
+        if (dis.equals("y")) {
+            return true;
         } else
-            System.out.println("no discount");
+            return false;
     }
 
 }
